@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python -c \"from report.generator import ReportGenerator; from rules.engine import RuleEngine; engine = RuleEngine\\(\\); engine.max_orders_per_min = 3; [engine.on_order\\({''id'': f''o-{i}'', ''user_id'': ''alice'', ''side'': ''buy'', ''type'': ''limit'', ''price'': 50000, ''quantity'': 1, ''symbol'': ''BTC/USDT''}\\) for i in range\\(5\\)]; gen = ReportGenerator\\(\\); report = gen.generate_offline\\(engine.get_summary\\(\\)\\); print\\(repr\\(report[:100]\\)\\)\")",
+      "Bash(python:*)",
+      "Bash(PYTHONUTF8=1 python -u tests/test_rules.py)"
+    ]
+  }
+}

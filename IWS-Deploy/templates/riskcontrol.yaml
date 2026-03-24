@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: iws-riskcontrol
+  namespace: {{ .Values.namespace }}
+spec:
+  replicas: {{ .Values.riskcontrol.replicas }}
+  selector:
+    matchLabels:
+      app: iws-riskcontrol
+  template:
+    metadata:
+      labels:
+        app: iws-riskcontrol
+    spec:
+      containers:
+        - name: iws-riskcontrol
+          image: {{ .Values.riskcontrol.image }}
+          imagePullPolicy: Never
+          env:
+            - name: KAFKA_BROKER
+              value: "kafka:9092"
+            - name: PYTHONUNBUFFERED
+              value: "1"
+          livenessProbe:
+            exec:
+              command: ["sh", "-c", "kill -0 1"]
+            initialDelaySeconds: 10
+            periodSeconds: 15
+            failureThreshold: 3

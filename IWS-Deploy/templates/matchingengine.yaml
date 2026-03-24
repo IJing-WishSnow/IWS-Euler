@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: iws-matchingengine
+  namespace: {{ .Values.namespace }}
+spec:
+  replicas: {{ .Values.matchingengine.replicas }}
+  selector:
+    matchLabels:
+      app: iws-matchingengine
+  template:
+    metadata:
+      labels:
+        app: iws-matchingengine
+    spec:
+      containers:
+        - name: iws-matchingengine
+          image: {{ .Values.matchingengine.image }}
+          imagePullPolicy: Never
+          env:
+            - name: KAFKA_BROKER
+              value: "kafka:9092"
+          livenessProbe:
+            exec:
+              command: ["sh", "-c", "kill -0 1"]
+            initialDelaySeconds: 10
+            periodSeconds: 15
+            failureThreshold: 3

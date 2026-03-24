@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: anvil
+  namespace: {{ .Values.namespace }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: anvil
+  template:
+    metadata:
+      labels:
+        app: anvil
+    spec:
+      containers:
+        - name: anvil
+          image: {{ .Values.anvil.image }}
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 8545
+          readinessProbe:
+            tcpSocket:
+              port: 8545
+            initialDelaySeconds: 15
+            periodSeconds: 5
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: anvil
+  namespace: {{ .Values.namespace }}
+spec:
+  selector:
+    app: anvil
+  ports:
+    - port: 8545
+      targetPort: 8545

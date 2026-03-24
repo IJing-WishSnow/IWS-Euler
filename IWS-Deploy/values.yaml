@@ -1,0 +1,49 @@
+namespace: iws-Euler
+
+kafka:
+  image: apache/kafka:3.8.1
+  clusterID: "IWS-Euler-kafka-cluster"
+
+redis:
+  image: redis:7-alpine
+
+anvil:
+  image: iws-anvil:latest
+  contractAddress: "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512"
+  operatorPrivKey: "59c6995e998f97a5a0044966f0945389dc9e86dae88c7a8412f4603b6b78690d"
+
+gateway:
+  image: iws-gateway:latest
+  replicas: 1
+  port: 8081
+
+marketdata:
+  image: iws-marketdata:latest
+  replicas: 1
+  port: 8080
+
+orderservice:
+  image: iws-orderservice:latest
+  replicas: 1
+  port: 8082
+
+matchingengine:
+  image: iws-matchingengine:latest
+  replicas: 1
+
+accountservice:
+  image: iws-accountservice:latest
+  replicas: 1
+
+chainclient:
+  image: iws-chainclient:latest
+  replicas: 1
+
+riskcontrol:
+  image: iws-riskcontrol:latest
+  replicas: 1
+
+webapp:
+  image: iws-webapp:latest
+  replicas: 1
+  port: 80

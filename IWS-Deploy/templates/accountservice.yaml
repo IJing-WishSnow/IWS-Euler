@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: iws-accountservice
+  namespace: {{ .Values.namespace }}
+spec:
+  replicas: {{ .Values.accountservice.replicas }}
+  selector:
+    matchLabels:
+      app: iws-accountservice
+  template:
+    metadata:
+      labels:
+        app: iws-accountservice
+    spec:
+      containers:
+        - name: iws-accountservice
+          image: {{ .Values.accountservice.image }}
+          imagePullPolicy: Never
+          env:
+            - name: KAFKA_BROKER
+              value: "kafka:9092"
+          livenessProbe:
+            exec:
+              command: ["sh", "-c", "kill -0 1"]
+            initialDelaySeconds: 10
+            periodSeconds: 15
+            failureThreshold: 3

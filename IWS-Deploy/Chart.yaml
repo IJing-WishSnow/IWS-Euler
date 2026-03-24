@@ -1,0 +1,6 @@
+apiVersion: v2
+name: iws-Euler
+description: IWS Exchange - Full-stack trading system (Kafka + Go + Python + React)
+type: application
+version: 0.1.0
+appVersion: "1.0.0"
