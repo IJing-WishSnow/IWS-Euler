@@ -24,6 +24,10 @@ spec:
               value: "http://anvil:8545"
             - name: CONTRACT_ADDRESS
               value: {{ .Values.anvil.contractAddress | quote }}
+            - name: USDT_TOKEN_ADDR
+              value: {{ .Values.anvil.usdtTokenAddress | quote }}
+            - name: BTC_TOKEN_ADDR
+              value: {{ .Values.anvil.btcTokenAddress | quote }}
             - name: OPERATOR_PRIV_KEY
               value: {{ .Values.anvil.operatorPrivKey | quote }}
           livenessProbe:

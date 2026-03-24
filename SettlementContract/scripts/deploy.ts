@@ -19,10 +19,17 @@ async function main() {
   await settlement.waitForDeployment();
   console.log("Settlement 地址:", await settlement.getAddress());
 
-  // 3. 给 deployer mint 一些测试 USDT
-  const ONE = 10n ** 6n;
-  await usdt.mint(deployer.address, 100000n * ONE);
-  console.log("已 mint 100000 USDT 给 deployer");
+  // 3. 部署 MockBTC（8 位精度）
+  const btc = await MockERC20.deploy("Mock BTC", "BTC", 8) as unknown as MockERC20;
+  await btc.waitForDeployment();
+  console.log("MockBTC 地址:", await btc.getAddress());
+
+  // 4. 给 deployer mint 测试代币
+  const ONE_USDT = 10n ** 6n;
+  const ONE_BTC  = 10n ** 8n;
+  await usdt.mint(deployer.address, 100000n * ONE_USDT);
+  await btc.mint(deployer.address, 10n * ONE_BTC);
+  console.log("已 mint 100000 USDT 和 10 BTC 给 deployer");
 
   console.log("\n合约部署完成。");
   console.log("下一步：在前端或脚本中 approve + deposit，再由 operator 调用 settle。");

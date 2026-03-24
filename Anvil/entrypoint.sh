@@ -28,6 +28,12 @@ SETTLEMENT_INIT="0x$(cat /contracts/settlement.bin)${SETTLEMENT_ARGS}"
 cast send --private-key $DEPLOYER_KEY --rpc-url $RPC --create $SETTLEMENT_INIT > /dev/null
 echo "[init] Settlement deployed: 0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512"
 
+# Deploy MockBTC (nonce 2 → 0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0)
+BTC_ARGS=$(cast abi-encode "constructor(string,string,uint8)" "Mock BTC" "BTC" 8 | sed 's/0x//')
+BTC_INIT="0x$(cat /contracts/mock.bin)${BTC_ARGS}"
+cast send --private-key $DEPLOYER_KEY --rpc-url $RPC --create $BTC_INIT > /dev/null
+echo "[init] MockBTC deployed: 0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0"
+
 echo "[init] Contract deployment complete. Anvil running."
 
 # Keep Anvil in foreground

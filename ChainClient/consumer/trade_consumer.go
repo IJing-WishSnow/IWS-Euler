@@ -16,8 +16,10 @@ import (
 
 const (
 	TradesTopic = "trades"
-	// TokenDecimals USDT 精度：1 USDT = 10^6 units
-	TokenDecimals = 1_000_000
+	// USDTDecimals USDT 精度：1 USDT = 10^6 units
+	USDTDecimals = 1_000_000
+	// BTCDecimals BTC 精度：1 BTC = 10^8 units
+	BTCDecimals = 100_000_000
 )
 
 var KafkaBroker = getEnv("KAFKA_BROKER", "localhost:9094")
@@ -49,8 +51,11 @@ var UserAddressMap = map[string]common.Address{
 	"bob":   common.HexToAddress("0x90F79bf6EB2c4f870365E785982E1f101E93b906"), // Anvil account 3
 }
 
-// TokenAddress USDT 合约地址（Anvil 部署的 MockUSDT）
-var TokenAddress = common.HexToAddress("0x5FbDB2315678afecb367f032d93F642f64180aa3")
+// USDTAddress USDT 合约地址（Anvil nonce 0）
+var USDTAddress = common.HexToAddress(getEnv("USDT_TOKEN_ADDR", "0x5FbDB2315678afecb367f032d93F642f64180aa3"))
+
+// BTCAddress MockBTC 合约地址（Anvil nonce 2）
+var BTCAddress = common.HexToAddress(getEnv("BTC_TOKEN_ADDR", "0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0"))
 
 // TradeConsumer 消费成交回报并触发链上结算
 type TradeConsumer struct {
@@ -97,36 +102,42 @@ func (c *TradeConsumer) Run(ctx context.Context) error {
 			log.Printf("[ChainClient] 收到成交: id=%s buy=%s sell=%s qty=%d price=%d",
 				trade.ID, trade.BuyUserID, trade.SellUserID, trade.Quantity, trade.Price)
 
-			settlement := c.buildSettlement(trade)
-			if settlement == nil {
+			settlements := c.buildSettlements(trade)
+			if settlements == nil {
 				log.Printf("[ChainClient] 跳过: 用户地址未找到 (buy=%s sell=%s)", trade.BuyUserID, trade.SellUserID)
 				continue
 			}
 
-			if err := c.settlementClient.Settle(ctx, []client.Settlement{*settlement}); err != nil {
+			if err := c.settlementClient.Settle(ctx, settlements); err != nil {
 				log.Printf("[ChainClient] 链上结算失败: %v", err)
 			}
 		}
 	}
 }
 
-// buildSettlement 将成交回报转换为链上结算指令
-// 成交语义：买方付 USDT，卖方收 USDT（简化：只处理 USDT 结算）
-func (c *TradeConsumer) buildSettlement(trade TradeMessage) *client.Settlement {
+// buildSettlements 将成交回报转换为链上结算指令（2条：USDT + BTC）
+// BTC/USDT 成交：买方付 USDT → 卖方；卖方付 BTC → 买方
+func (c *TradeConsumer) buildSettlements(trade TradeMessage) []client.Settlement {
 	buyerAddr, buyerOK := UserAddressMap[strings.ToLower(trade.BuyUserID)]
 	sellerAddr, sellerOK := UserAddressMap[strings.ToLower(trade.SellUserID)]
 	if !buyerOK || !sellerOK {
 		return nil
 	}
 
-	// 演示用换算：1 单位数量 = 1 USDT（忽略价格，专注验证链上结算流程）
-	amount := new(big.Int).Mul(big.NewInt(trade.Quantity), big.NewInt(TokenDecimals))
+	// USDT 金额：price（整数USDT）× quantity × 10^6
+	usdtAmount := new(big.Int).Mul(
+		big.NewInt(trade.Price*trade.Quantity),
+		big.NewInt(USDTDecimals),
+	)
+	// BTC 金额：quantity × 10^8
+	btcAmount := new(big.Int).Mul(
+		big.NewInt(trade.Quantity),
+		big.NewInt(BTCDecimals),
+	)
 
-	return &client.Settlement{
-		From:   buyerAddr,  // 买方付 USDT
-		To:     sellerAddr, // 卖方收 USDT
-		Token:  TokenAddress,
-		Amount: amount,
+	return []client.Settlement{
+		{From: buyerAddr, To: sellerAddr, Token: USDTAddress, Amount: usdtAmount},  // 买方付 USDT
+		{From: sellerAddr, To: buyerAddr, Token: BTCAddress, Amount: btcAmount},    // 卖方付 BTC
 	}
 }
 
