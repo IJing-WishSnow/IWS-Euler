@@ -10,13 +10,13 @@
 
 ### 1. Gateway `users` map 数据竞争
 
-**文件：** `IWS-Gateway/handler/handler.go:22`
+**文件：** `Gateway/handler/handler.go:22`
 **问题：** `var users = map[string]string{}` 是包级别无锁 map。Gin 每个请求一个 goroutine，并发注册/登录时会触发 data race，Go runtime 会直接 panic。
 **修复：** 加 `sync.RWMutex`。
 
 ### 2. RiskControl 消费线程永久死亡
 
-**文件：** `IWS-RiskControl/consumer.py:29`
+**文件：** `RiskControl/consumer.py:29`
 **问题：** `_consume_orders` 和 `_consume_trades` 是 daemon 线程，启动时若 Kafka 未就绪，`KafkaConsumer()` 构造函数抛 `NoBrokersAvailable`，线程直接死亡且无 try/except 重试。主进程 `while True: time.sleep(1)` 仍在运行，K8s 认为 Pod 健康，但消费线程已永久死亡。**风控实际上什么都没有在消费。**
 **验证：** `kubectl logs deployment/iws-riskcontrol` 最新日志停在 108 分钟前的异常栈。
 **修复：** 在线程内部加 `try/except + 重试循环`。
@@ -27,19 +27,19 @@
 
 ### 3. OrderService 创建了从不使用的 Kafka Consumer
 
-**文件：** `IWS-OrderService/service/order_service.go:22`
+**文件：** `OrderService/service/order_service.go:22`
 **问题：** `NewOrderService()` 创建了 `tradeConsumer`（group: "order-service"），但 `ConsumeTradeResults` 在 `cmd/main.go` 里从未调用。白白占一个 Kafka Consumer Group 连接，浪费资源。
 **修复：** 从 `OrderService` struct 中移除 `tradeConsumer`，从 `NewOrderService()` 和 `Close()` 中删除相关代码。
 
 ### 4. Gateway 调用 OrderService 无超时
 
-**文件：** `IWS-Gateway/handler/handler.go:96`
+**文件：** `Gateway/handler/handler.go:96`
 **问题：** `http.Post(orderServiceURL+"/order", ...)` 使用默认 `http.Client`，无超时设置。若 OrderService 挂起，Gateway 请求永久阻塞，前端无响应，且会耗尽 Gateway goroutine 资源。
 **修复：** 使用带 timeout 的 `http.Client`（建议 5s）。
 
 ### 5. MatchingEngine `users` map 无限增长（内存泄漏）
 
-**文件：** `IWS-MatchingEngine/bridge/bridge.go:127`
+**文件：** `MatchingEngine/bridge/bridge.go:127`
 **问题：** `b.users[om.ID] = om.UserID` 每笔订单加一条，从不删除。长期运行持续泄漏内存。
 **修复：** 成交完成后从 map 中删除已用的 orderID。
 
@@ -64,7 +64,7 @@
 
 ### 8. operatorPrivKey 明文暴露
 
-**文件：** `IWS-Deploy/values.yaml:13`，注入到 Pod env var
+**文件：** `Deploy/values.yaml:13`，注入到 Pod env var
 **问题：** `kubectl describe pod iws-chainclient-xxx` 可直接看到私钥明文。
 **修复：** 改用 K8s Secret。（Demo 项目可接受现状，记录风险即可）
 
@@ -74,7 +74,7 @@
 
 ### 9. nginx location 重复冗余
 
-**文件：** `IWS-WebApp/nginx.conf:11-21`
+**文件：** `WebApp/nginx.conf:11-21`
 **问题：** 两个 location 块处理 login/register，逻辑重叠，可读性差。功能上不影响。
 
 ### 10. Gin 运行在 debug 模式
@@ -88,7 +88,7 @@
 
 ### 12. OrderService 日志格式
 
-**文件：** `IWS-OrderService/service/order_service.go:50`
+**文件：** `OrderService/service/order_service.go:50`
 **问题：** `%d` 格式化 `Side` 类型，日志打印 `0`/`1` 而非 `buy`/`sell`。
 
 ---

@@ -26,13 +26,13 @@
 
 | 文件                                                                                                                               | 说明                                      |
 | ---------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------- |
-| [T:/IWS-Euler/IWS-Gateway/middleware/ratelimit_test.go](T:/IWS-Euler/IWS-Gateway/middleware/ratelimit_test.go)                     | Gateway 限流单元 + 集成测试（Go）         |
-| [T:/IWS-Euler/IWS-MatchingEngine/engine/engine_test.go](T:/IWS-Euler/IWS-MatchingEngine/engine/engine_test.go)                     | 撮合引擎单元测试（Go）                    |
-| [T:/IWS-Euler/IWS-MatchingEngine/bridge/bridge_test.go](T:/IWS-Euler/IWS-MatchingEngine/bridge/bridge_test.go)                     | MatchingEngine Kafka 集成测试（Go）       |
-| [T:/IWS-Euler/IWS-AccountService/service/account_service_test.go](T:/IWS-Euler/IWS-AccountService/service/account_service_test.go) | AccountService 单元测试（Go）             |
-| [T:/IWS-Euler/IWS-RiskControl/tests/test_rule_engine.py](T:/IWS-Euler/IWS-RiskControl/tests/test_rule_engine.py)                   | 风控规则引擎单元测试（Python，10 个用例） |
+| [T:/IWS-Euler/Gateway/middleware/ratelimit_test.go](T:/IWS-Euler/Gateway/middleware/ratelimit_test.go)                     | Gateway 限流单元 + 集成测试（Go）         |
+| [T:/IWS-Euler/MatchingEngine/engine/engine_test.go](T:/IWS-Euler/MatchingEngine/engine/engine_test.go)                     | 撮合引擎单元测试（Go）                    |
+| [T:/IWS-Euler/MatchingEngine/bridge/bridge_test.go](T:/IWS-Euler/MatchingEngine/bridge/bridge_test.go)                     | MatchingEngine Kafka 集成测试（Go）       |
+| [T:/IWS-Euler/AccountService/service/account_service_test.go](T:/IWS-Euler/AccountService/service/account_service_test.go) | AccountService 单元测试（Go）             |
+| [T:/IWS-Euler/RiskControl/tests/test_rule_engine.py](T:/IWS-Euler/RiskControl/tests/test_rule_engine.py)                   | 风控规则引擎单元测试（Python，10 个用例） |
 | [T:/IWS-Euler/tests/e2e_system_test.py](T:/IWS-Euler/tests/e2e_system_test.py)                                                     | 系统端到端测试（Python，12 个用例）       |
-| [T:/IWS-Euler/IWS-SettlementContract/test/IWSSettlement.test.ts](T:/IWS-Euler/IWS-SettlementContract/test/IWSSettlement.test.ts)   | 合约测试（TypeScript，9 个用例）          |
+| [T:/IWS-Euler/SettlementContract/test/IWSSettlement.test.ts](T:/IWS-Euler/SettlementContract/test/IWSSettlement.test.ts)   | 合约测试（TypeScript，9 个用例）          |
 
 ---
 
@@ -51,14 +51,14 @@
 
 | 服务                   | 路径                                                                                           |
 | ---------------------- | ---------------------------------------------------------------------------------------------- |
-| IWS-Gateway            | [T:/IWS-Euler/IWS-Gateway/README.md](T:/IWS-Euler/IWS-Gateway/README.md)                       |
-| IWS-OrderService       | [T:/IWS-Euler/IWS-OrderService/README.md](T:/IWS-Euler/IWS-OrderService/README.md)             |
-| IWS-MatchingEngine     | [T:/IWS-Euler/IWS-MatchingEngine/README.md](T:/IWS-Euler/IWS-MatchingEngine/README.md)         |
-| IWS-AccountService     | [T:/IWS-Euler/IWS-AccountService/README.md](T:/IWS-Euler/IWS-AccountService/README.md)         |
-| IWS-MarketData         | [T:/IWS-Euler/IWS-MarketData/README.md](T:/IWS-Euler/IWS-MarketData/README.md)                 |
-| IWS-ChainClient        | [T:/IWS-Euler/IWS-ChainClient/README.md](T:/IWS-Euler/IWS-ChainClient/README.md)               |
-| IWS-RiskControl        | [T:/IWS-Euler/IWS-RiskControl/README.md](T:/IWS-Euler/IWS-RiskControl/README.md)               |
-| IWS-Anvil              | [T:/IWS-Euler/IWS-Anvil/README.md](T:/IWS-Euler/IWS-Anvil/README.md)                           |
-| IWS-WebApp             | [T:/IWS-Euler/IWS-WebApp/README.md](T:/IWS-Euler/IWS-WebApp/README.md)                         |
-| IWS-SettlementContract | [T:/IWS-Euler/IWS-SettlementContract/README.md](T:/IWS-Euler/IWS-SettlementContract/README.md) |
-| IWS-Deploy             | [T:/IWS-Euler/IWS-Deploy/README.md](T:/IWS-Euler/IWS-Deploy/README.md)                         |
+| Gateway            | [T:/IWS-Euler/Gateway/README.md](T:/IWS-Euler/Gateway/README.md)                       |
+| OrderService       | [T:/IWS-Euler/OrderService/README.md](T:/IWS-Euler/OrderService/README.md)             |
+| MatchingEngine     | [T:/IWS-Euler/MatchingEngine/README.md](T:/IWS-Euler/MatchingEngine/README.md)         |
+| AccountService     | [T:/IWS-Euler/AccountService/README.md](T:/IWS-Euler/AccountService/README.md)         |
+| MarketData         | [T:/IWS-Euler/MarketData/README.md](T:/IWS-Euler/MarketData/README.md)                 |
+| ChainClient        | [T:/IWS-Euler/ChainClient/README.md](T:/IWS-Euler/ChainClient/README.md)               |
+| RiskControl        | [T:/IWS-Euler/RiskControl/README.md](T:/IWS-Euler/RiskControl/README.md)               |
+| Anvil              | [T:/IWS-Euler/Anvil/README.md](T:/IWS-Euler/Anvil/README.md)                           |
+| WebApp             | [T:/IWS-Euler/WebApp/README.md](T:/IWS-Euler/WebApp/README.md)                         |
+| SettlementContract | [T:/IWS-Euler/SettlementContract/README.md](T:/IWS-Euler/SettlementContract/README.md) |
+| Deploy             | [T:/IWS-Euler/Deploy/README.md](T:/IWS-Euler/Deploy/README.md)                         |

@@ -16,15 +16,15 @@
 ```bash
 # 在项目根目录 T:/IWS-Euler/ 下执行
 
-cd IWS-Anvil           && docker build -t iws-anvil:latest .           && cd ..
-cd IWS-Gateway         && docker build -t iws-gateway:latest .         && cd ..
-cd IWS-OrderService    && docker build -t iws-orderservice:latest .    && cd ..
-cd IWS-MatchingEngine  && docker build -t iws-matchingengine:latest .  && cd ..
-cd IWS-AccountService  && docker build -t iws-accountservice:latest .  && cd ..
-cd IWS-MarketData      && docker build -t iws-marketdata:latest .      && cd ..
-cd IWS-ChainClient     && docker build -t iws-chainclient:latest .     && cd ..
-cd IWS-RiskControl     && docker build -t iws-riskcontrol:latest .     && cd ..
-cd IWS-WebApp          && docker build -t iws-webapp:latest .          && cd ..
+cd Anvil           && docker build -t iws-anvil:latest .           && cd ..
+cd Gateway         && docker build -t iws-gateway:latest .         && cd ..
+cd OrderService    && docker build -t iws-orderservice:latest .    && cd ..
+cd MatchingEngine  && docker build -t iws-matchingengine:latest .  && cd ..
+cd AccountService  && docker build -t iws-accountservice:latest .  && cd ..
+cd MarketData      && docker build -t iws-marketdata:latest .      && cd ..
+cd ChainClient     && docker build -t iws-chainclient:latest .     && cd ..
+cd RiskControl     && docker build -t iws-riskcontrol:latest .     && cd ..
+cd WebApp          && docker build -t iws-webapp:latest .          && cd ..
 ```
 
 验证镜像列表：
@@ -38,7 +38,7 @@ docker images | grep iws-
 ## 二、Helm 部署
 
 ```bash
-cd IWS-Deploy
+cd Deploy
 
 # 首次部署
 helm install iws-Euler . --namespace iws-Euler --create-namespace
@@ -107,7 +107,7 @@ kubectl port-forward svc/iws-anvil 8545:8545 -n iws-Euler
 
 ```bash
 # 以 Gateway 为例
-cd IWS-Gateway && docker build -t iws-gateway:latest . && cd ..
+cd Gateway && docker build -t iws-gateway:latest . && cd ..
 kubectl rollout restart deployment/iws-gateway -n iws-Euler
 kubectl rollout status deployment/iws-gateway -n iws-Euler
 ```
@@ -125,7 +125,7 @@ kubectl delete namespace iws-Euler
 
 ## 六、配置说明
 
-所有配置项集中在 `IWS-Deploy/values.yaml`：
+所有配置项集中在 `Deploy/values.yaml`：
 
 | 字段                    | 说明                                 |
 | ----------------------- | ------------------------------------ |
@@ -142,7 +142,7 @@ kubectl delete namespace iws-Euler
 
 ## 七、合约部署（Anvil）
 
-IWS-Anvil 镜像启动时自动部署合约，无需手动操作。
+Anvil 镜像启动时自动部署合约，无需手动操作。
 
 合约地址（确定性，基于 Anvil 默认账户 nonce 0/1）：
 

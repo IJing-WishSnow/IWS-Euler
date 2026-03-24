@@ -16,11 +16,11 @@
 
 ### Go 开发环境
 
-各 Go 服务均有独立的 `go.mod`，模块名为 `github.com/yourname/IWS-<ServiceName>`。
+各 Go 服务均有独立的 `go.mod`，模块名为 `github.com/yourname/<ServiceName>`。
 
 ```bash
 # 示例：进入 Gateway 开发
-cd IWS-Gateway
+cd Gateway
 go mod tidy
 go build ./...
 ```
@@ -34,35 +34,35 @@ go build ./...
 使用 `wishsnow/golang-dev:latest` 镜像（包含 Go 工具链），避免本地安装依赖：
 
 ```bash
-# IWS-MatchingEngine 单元测试
-docker run --rm -v "T:/IWS-Euler/IWS-MatchingEngine:/workspace" \
+# MatchingEngine 单元测试
+docker run --rm -v "T:/IWS-Euler/MatchingEngine:/workspace" \
   wishsnow/golang-dev:latest \
   sh -c "cd /workspace && go test ./... -v"
 
-# IWS-AccountService 单元测试
-docker run --rm -v "T:/IWS-Euler/IWS-AccountService:/workspace" \
+# AccountService 单元测试
+docker run --rm -v "T:/IWS-Euler/AccountService:/workspace" \
   wishsnow/golang-dev:latest \
   sh -c "cd /workspace && go test ./... -v"
 
-# IWS-Gateway 单元测试（含 formatInt 验证）
-docker run --rm -v "T:/IWS-Euler/IWS-Gateway:/workspace" \
+# Gateway 单元测试（含 formatInt 验证）
+docker run --rm -v "T:/IWS-Euler/Gateway:/workspace" \
   wishsnow/golang-dev:latest \
   sh -c "cd /workspace && go test ./... -v"
 ```
 
-### IWS-Gateway 限流集成测试（需 Redis）
+### Gateway 限流集成测试（需 Redis）
 
 ```bash
 # 先启动 Redis 端口转发
 kubectl port-forward svc/redis 6379:6379 -n iws-Euler &
 
 # 运行集成测试（自动跳过如果 Redis 不可达）
-docker run --rm --network host -v "T:/IWS-Euler/IWS-Gateway:/workspace" \
+docker run --rm --network host -v "T:/IWS-Euler/Gateway:/workspace" \
   wishsnow/golang-dev:latest \
   sh -c "cd /workspace && go test ./middleware/... -v -run TestRateLimiter"
 ```
 
-### IWS-RiskControl 单元测试（Python）
+### RiskControl 单元测试（Python）
 
 ```bash
 # 在 Pod 内运行（避免依赖安装问题）
@@ -73,19 +73,19 @@ kubectl exec -n iws-Euler $POD -- python -m unittest tests.test_rule_engine -v
 或本地运行（需安装依赖）：
 
 ```bash
-cd IWS-RiskControl
+cd RiskControl
 pip install -r requirements.txt
 python -m unittest tests.test_rule_engine -v
 ```
 
-### IWS-MatchingEngine Kafka 集成测试
+### MatchingEngine Kafka 集成测试
 
 ```bash
 # 先启动 Kafka 端口转发
 kubectl port-forward svc/kafka 9094:9092 -n iws-Euler &
 
 docker run --rm --network host \
-  -v "T:/IWS-Euler/IWS-MatchingEngine:/workspace" \
+  -v "T:/IWS-Euler/MatchingEngine:/workspace" \
   wishsnow/golang-dev:latest \
   sh -c "cd /workspace && go test ./bridge/... -v -run TestBridge"
 ```
@@ -138,7 +138,7 @@ PYTHONIOENCODING=utf-8 python T:/IWS-Euler/tests/e2e_system_test.py -v
 ### 环境
 
 ```bash
-cd IWS-SettlementContract
+cd SettlementContract
 npm install
 ```
 
@@ -181,7 +181,7 @@ npx hardhat run scripts/deploy.ts --network localhost
 ### Go 服务结构
 
 ```
-IWS-<ServiceName>/
+<ServiceName>/
 ├── cmd/
 │   └── main.go          # 入口，依赖注入
 ├── <layer>/             # handler / service / consumer / engine 等
@@ -195,7 +195,7 @@ IWS-<ServiceName>/
 ### 测试文件位置
 
 - Go 单元测试：与被测文件同目录，`*_test.go`
-- Python 单元测试：`IWS-RiskControl/tests/`
+- Python 单元测试：`RiskControl/tests/`
 - 系统 E2E 测试：`tests/e2e_system_test.py`（项目根目录）
 
 ---

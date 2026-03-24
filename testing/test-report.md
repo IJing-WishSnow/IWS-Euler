@@ -22,7 +22,7 @@
 
 ## 分模块执行结果
 
-### 1. IWS-MatchingEngine — 撮合引擎
+### 1. MatchingEngine — 撮合引擎
 
 **执行环境**: wishsnow/golang-dev:latest Docker 容器
 
@@ -41,7 +41,7 @@ BenchmarkPlaceOrder-12: 8,239,641 次/3s = 779.8 ns/op ≈ 1.28M orders/sec
 
 ---
 
-### 2. IWS-MatchingEngine — Kafka 集成测试
+### 2. MatchingEngine — Kafka 集成测试
 
 **执行环境**: Docker (--network host) + kubectl port-forward kafka:9092 → localhost:9094
 
@@ -59,7 +59,7 @@ BenchmarkPlaceOrder-12: 8,239,641 次/3s = 779.8 ns/op ≈ 1.28M orders/sec
 
 ---
 
-### 3. IWS-AccountService — 账户服务
+### 3. AccountService — 账户服务
 
 **执行环境**: wishsnow/golang-dev:latest Docker 容器
 
@@ -70,14 +70,14 @@ BenchmarkPlaceOrder-12: 8,239,641 次/3s = 779.8 ns/op ≈ 1.28M orders/sec
 === RUN   TestSettleSell           --- PASS (0.00s)
 === RUN   TestLedgerAudit          --- PASS (0.00s)
 === RUN   TestAssetConservation    --- PASS (0.00s)
-ok  github.com/yourname/IWS-AccountService/service  0.004s
+ok  github.com/yourname/AccountService/service  0.004s
 ```
 
 **结论**: 7/7 通过，包含资产守恒验证（总 USDT=10000，总 BTC=100，完整交易流程后不变）。
 
 ---
 
-### 4. IWS-MarketData — 行情服务
+### 4. MarketData — 行情服务
 
 **执行环境**: wishsnow/golang-dev:latest Docker 容器
 
@@ -97,7 +97,7 @@ ok  github.com/yourname/IWS-AccountService/service  0.004s
 
 ---
 
-### 5. IWS-RiskControl — 风控规则引擎
+### 5. RiskControl — 风控规则引擎
 
 **执行环境**: iws-riskcontrol Pod (Python 3.11)
 
@@ -120,7 +120,7 @@ Ran 10 tests in 1.103s — OK
 
 ---
 
-### 6. IWS-Gateway — 限流修复验证
+### 6. Gateway — 限流修复验证
 
 **执行环境**: wishsnow/golang-dev:latest Docker 容器
 

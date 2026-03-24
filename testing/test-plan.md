@@ -16,17 +16,17 @@
 
 | 服务               | 测试类型   | 覆盖内容                     |
 | ------------------ | ---------- | ---------------------------- |
-| IWS-MatchingEngine | 单元、集成 | 撮合算法、Kafka 桥接         |
-| IWS-AccountService | 单元       | 充提、冻结、结算、流水审计   |
-| IWS-MarketData     | 单元       | K 线聚合、WebSocket 广播     |
-| IWS-RiskControl    | 单元       | 高频检测、大额检测、幌骗检测 |
-| IWS-Gateway        | 单元、集成 | 限流修复验证、API 接口       |
+| MatchingEngine | 单元、集成 | 撮合算法、Kafka 桥接         |
+| AccountService | 单元       | 充提、冻结、结算、流水审计   |
+| MarketData     | 单元       | K 线聚合、WebSocket 广播     |
+| RiskControl    | 单元       | 高频检测、大额检测、幌骗检测 |
+| Gateway        | 单元、集成 | 限流修复验证、API 接口       |
 | 全系统             | 系统/E2E   | 注册→登录→下单→撮合→行情推送 |
 
 **不在本次范围内**：
 
-- IWS-Anvil 链上合约功能测试（需链上测试环境）
-- IWS-ChainClient 链上结算（无预存用户余额）
+- Anvil 链上合约功能测试（需链上测试环境）
+- ChainClient 链上结算（无预存用户余额）
 - 性能压测（仅有基准测试数据）
 
 ---
@@ -69,16 +69,16 @@
 
 ```bash
 # 单元测试（Go）
-docker run --rm -v "T:/IWS-Euler/IWS-MatchingEngine:/workspace" wishsnow/golang-dev:latest \
+docker run --rm -v "T:/IWS-Euler/MatchingEngine:/workspace" wishsnow/golang-dev:latest \
   sh -c "cd /workspace && go test ./engine/... ./bridge/... -v -run TestBridgeProcessOrder -count=1"
 
-docker run --rm -v "T:/IWS-Euler/IWS-AccountService:/workspace" wishsnow/golang-dev:latest \
+docker run --rm -v "T:/IWS-Euler/AccountService:/workspace" wishsnow/golang-dev:latest \
   sh -c "cd /workspace && go test ./service/... -v -count=1"
 
-docker run --rm -v "T:/IWS-Euler/IWS-MarketData:/workspace" wishsnow/golang-dev:latest \
+docker run --rm -v "T:/IWS-Euler/MarketData:/workspace" wishsnow/golang-dev:latest \
   sh -c "cd /workspace && go test ./kline/... ./ws/... -v -count=1"
 
-docker run --rm -v "T:/IWS-Euler/IWS-Gateway:/workspace" wishsnow/golang-dev:latest \
+docker run --rm -v "T:/IWS-Euler/Gateway:/workspace" wishsnow/golang-dev:latest \
   sh -c "cd /workspace && go test ./middleware/... -v -run TestFormatInt -count=1"
 
 # 单元测试（Python）
@@ -86,13 +86,13 @@ kubectl exec -n iws-Euler <riskcontrol-pod> -- python -m unittest tests.test_rul
 
 # Kafka 集成测试（需 port-forward kafka:9092 -> localhost:9094）
 kubectl port-forward svc/kafka 9094:9092 -n iws-Euler
-docker run --rm -v "T:/IWS-Euler/IWS-MatchingEngine:/workspace" --network host \
+docker run --rm -v "T:/IWS-Euler/MatchingEngine:/workspace" --network host \
   wishsnow/golang-dev:latest \
   sh -c "cd /workspace && go test ./bridge/... -v -run TestBridgeKafkaIntegration -count=1 -timeout=60s"
 
 # 限流 Redis 集成测试（需 port-forward redis:6379 -> localhost:6379）
 kubectl port-forward svc/redis 6379:6379 -n iws-Euler
-docker run --rm -v "T:/IWS-Euler/IWS-Gateway:/workspace" --network host \
+docker run --rm -v "T:/IWS-Euler/Gateway:/workspace" --network host \
   wishsnow/golang-dev:latest \
   sh -c "cd /workspace && go test ./middleware/... -v -run TestRateLimiterIntegration -count=1"
 
@@ -102,7 +102,7 @@ kubectl port-forward svc/iws-marketdata 18084:8080 -n iws-Euler
 PYTHONIOENCODING=utf-8 python T:/IWS-Euler/tests/e2e_system_test.py -v
 
 # 性能基准测试
-docker run --rm -v "T:/IWS-Euler/IWS-MatchingEngine:/workspace" wishsnow/golang-dev:latest \
+docker run --rm -v "T:/IWS-Euler/MatchingEngine:/workspace" wishsnow/golang-dev:latest \
   sh -c "cd /workspace && go test ./engine/... -bench=BenchmarkPlaceOrder -benchtime=3s -count=1"
 ```
 
