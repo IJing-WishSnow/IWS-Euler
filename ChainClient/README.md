@@ -17,7 +17,7 @@
 
 ## 合约交互
 
-调用合约：`Settlement.settle(Settlement[])`
+调用合约：`Settlement.settle(SettlementEntry[])`
 
 ```
 合约地址：0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512（Anvil 确定性地址）

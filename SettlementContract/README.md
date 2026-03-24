@@ -18,13 +18,13 @@
 
 **函数：**
 
-| 函数                       | 权限     | 说明                   |
-| -------------------------- | -------- | ---------------------- |
-| `deposit(token, amount)`   | 任何人   | 充值 ERC20，合约托管   |
-| `withdraw(token, amount)`  | 任何人   | 提现，链上验证余额     |
-| `settle(Settlement[])`     | operator | 批量结算：转移托管余额 |
-| `setOperator(newOperator)` | owner    | 更新 operator 地址     |
-| `getBalance(user, token)`  | view     | 查询链上托管余额       |
+| 函数                            | 权限     | 说明                   |
+| ------------------------------- | -------- | ---------------------- |
+| `deposit(token, amount)`        | 任何人   | 充值 ERC20，合约托管   |
+| `withdraw(token, amount)`       | 任何人   | 提现，链上验证余额     |
+| `settle(SettlementEntry[])`     | operator | 批量结算：转移托管余额 |
+| `setOperator(newOperator)`      | owner    | 更新 operator 地址     |
+| `getBalance(user, token)`       | view     | 查询链上托管余额       |
 
 **Settlement 结构体：**
 

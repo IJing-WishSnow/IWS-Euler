@@ -119,7 +119,7 @@ Anvil (本地链)
 - `Settlement.sol`：核心合约
   - `deposit(token, amount)` — 用户充值 ERC20
   - `withdraw(token, amount)` — 用户提现
-  - `settle(Settlement[])` — operator 批量结算（转移链上余额）
+  - `settle(SettlementEntry[])` — operator 批量结算（转移链上余额）
   - `setOperator(addr)` — owner 更新 operator
 - `MockERC20.sol`：无权限 mint 的测试用 ERC20
 - 安全：ReentrancyGuard + SafeERC20 + Checks-Effects-Interactions
