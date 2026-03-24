@@ -1,34 +1,55 @@
-# If you prefer the allow list template instead of the deny list, see community template:
-# https://github.com/github/gitignore/blob/main/community/Golang/Go.AllowList.gitignore
-#
-# Binaries for programs and plugins
+# ─── Go ──────────────────────────────────────────────────────────────────────
 *.exe
 *.exe~
 *.dll
 *.so
 *.dylib
-
-# Test binary, built with `go test -c`
 *.test
-
-# Code coverage profiles and other test artifacts
 *.out
 coverage.*
 *.coverprofile
 profile.cov
-
-# Dependency directories (remove the comment below to include it)
 # vendor/
-
-# Go workspace file
 go.work
 go.work.sum
 
-# env file
+# ─── Python ──────────────────────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*.pyo
+.venv/
+venv/
+*.egg-info/
+dist/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# ─── Node / Frontend ─────────────────────────────────────────────────────────
+node_modules/
+dist/
+build/
+.next/
+.nuxt/
+
+# ─── Solidity / Hardhat ──────────────────────────────────────────────────────
+SettlementContract/artifacts/
+SettlementContract/cache/
+SettlementContract/typechain-types/
+
+# ─── Env & Secrets ───────────────────────────────────────────────────────────
 .env
+.env.*
+!.env.example
 
-# Editor/IDE
-# .idea/
-# .vscode/
+# ─── IDE ─────────────────────────────────────────────────────────────────────
+.idea/
+.vscode/compose-spec.json
 
+# ─── OS ──────────────────────────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ─── Claude Code ─────────────────────────────────────────────────────────────
 .claude
