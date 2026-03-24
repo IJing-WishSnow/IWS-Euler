@@ -4,8 +4,8 @@ IWS-Euler 系统端到端测试
 测试完整业务流程：注册 -> 登录 -> 下单 -> 撮合 -> 行情推送 -> 风控检测
 
 前置条件（在另一终端运行）:
-  kubectl port-forward svc/iws-gateway 18083:8081 -n iws-Euler
-  kubectl port-forward svc/iws-marketdata 18084:8080 -n iws-Euler
+  kubectl port-forward svc/gateway 18083:8081 -n iws-Euler
+  kubectl port-forward svc/marketdata 18084:8080 -n iws-Euler
 """
 import io
 import json

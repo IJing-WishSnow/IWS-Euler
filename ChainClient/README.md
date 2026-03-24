@@ -21,7 +21,7 @@
 
 ```
 合约地址：0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512（Anvil 确定性地址）
-RPC：http://iws-anvil:8545
+RPC：http://anvil:8545
 Operator 私钥：从环境变量 OPERATOR_PRIV_KEY 读取
 ```
 
@@ -41,7 +41,7 @@ struct Settlement {
 | 变量 | 说明 |
 |------|------|
 | `KAFKA_BROKERS` | Kafka broker 地址 |
-| `RPC_URL` | 以太坊 RPC 端点（默认 `http://iws-anvil:8545`） |
+| `RPC_URL` | 以太坊 RPC 端点（默认 `http://anvil:8545`） |
 | `CONTRACT_ADDR` | IWSSettlement 合约地址 |
 | `OPERATOR_PRIV_KEY` | Operator 私钥（用于签名链上交易） |
 

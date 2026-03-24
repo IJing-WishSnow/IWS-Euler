@@ -22,7 +22,7 @@ API 网关服务，负责 JWT 鉴权、Redis 限流和请求路由。
 | 变量                | 默认值                         | 说明                               |
 | ------------------- | ------------------------------ | ---------------------------------- |
 | `REDIS_ADDR`        | `localhost:6379`               | Redis 地址                         |
-| `ORDER_SERVICE_URL` | `http://iws-orderservice:8082` | OrderService 地址                  |
+| `ORDER_SERVICE_URL` | `http://orderservice:8082` | OrderService 地址                  |
 | `GIN_MODE`          | `debug`                        | Gin 运行模式（生产设为 `release`） |
 
 ## 目录结构

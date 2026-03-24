@@ -92,7 +92,7 @@ Anvil (本地链)
 
 - 消费 Kafka `trades` topic
 - 聚合成交记录，批量调用 IWSSettlement 合约的 `settle()` 函数
-- 使用 Anvil 本地链（RPC: `http://iws-anvil:8545`）
+- 使用 Anvil 本地链（RPC: `http://anvil:8545`）
 - 消费组：`chainclient-group`
 
 ### RiskControl（风控引擎）
@@ -174,7 +174,7 @@ Anvil (本地链)
 | ----- | ------------------ | -------------- | --------- |
 | Kafka | apache/kafka:3.8.1 | kafka:9092     | 消息总线  |
 | Redis | redis:7-alpine     | redis:6379     | 限流 ZSET |
-| Anvil | iws-anvil:latest   | iws-anvil:8545 | 本地链    |
+| Anvil | anvil:latest   | anvil:8545 | 本地链    |
 
 ---
 
@@ -197,15 +197,15 @@ Anvil (本地链)
 ```
 namespace: iws-Euler
   Deployments:
-    iws-webapp          (NodePort 30080)
-    iws-gateway         (ClusterIP :8081)
-    iws-orderservice    (ClusterIP :8082)
-    iws-matchingengine  (no port)
-    iws-accountservice  (no port)
-    iws-marketdata      (ClusterIP :8080)
-    iws-chainclient     (no port)
-    iws-riskcontrol     (no port)
-    iws-anvil           (ClusterIP :8545)
+    webapp          (NodePort 30080)
+    gateway         (ClusterIP :8081)
+    orderservice    (ClusterIP :8082)
+    matchingengine  (no port)
+    accountservice  (no port)
+    marketdata      (ClusterIP :8080)
+    chainclient     (no port)
+    riskcontrol     (no port)
+    anvil           (ClusterIP :8545)
     kafka               (ClusterIP :9092)
     redis               (ClusterIP :6379)
 ```

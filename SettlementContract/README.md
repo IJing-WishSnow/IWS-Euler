@@ -94,7 +94,7 @@ npx hardhat test
 
 ```bash
 # 启动 Anvil（另一终端）
-kubectl port-forward svc/iws-anvil 8545:8545 -n iws-Euler
+kubectl port-forward svc/anvil 8545:8545 -n iws-Euler
 
 # 部署合约
 npx hardhat run scripts/deploy.ts --network localhost

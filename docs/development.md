@@ -66,7 +66,7 @@ docker run --rm --network host -v "T:/IWS-Euler/Gateway:/workspace" \
 
 ```bash
 # 在 Pod 内运行（避免依赖安装问题）
-POD=$(kubectl get pod -n iws-Euler -l app=iws-riskcontrol -o jsonpath='{.items[0].metadata.name}')
+POD=$(kubectl get pod -n iws-Euler -l app=riskcontrol -o jsonpath='{.items[0].metadata.name}')
 kubectl exec -n iws-Euler $POD -- python -m unittest tests.test_rule_engine -v
 ```
 
@@ -99,8 +99,8 @@ docker run --rm --network host \
 启动必要的端口转发：
 
 ```bash
-kubectl port-forward svc/iws-gateway 18083:8081 -n iws-Euler &
-kubectl port-forward svc/iws-marketdata 18084:8080 -n iws-Euler &
+kubectl port-forward svc/gateway 18083:8081 -n iws-Euler &
+kubectl port-forward svc/marketdata 18084:8080 -n iws-Euler &
 ```
 
 ### 运行测试
@@ -168,7 +168,7 @@ npx hardhat test
 
 ```bash
 # 启动 Anvil（另一终端）
-kubectl port-forward svc/iws-anvil 8545:8545 -n iws-Euler
+kubectl port-forward svc/anvil 8545:8545 -n iws-Euler
 
 # 部署
 npx hardhat run scripts/deploy.ts --network localhost
@@ -204,13 +204,13 @@ npx hardhat run scripts/deploy.ts --network localhost
 
 ```bash
 # 实时日志
-kubectl logs -n iws-Euler deployment/iws-gateway -f
-kubectl logs -n iws-Euler deployment/iws-matchingengine -f
-kubectl logs -n iws-Euler deployment/iws-accountservice -f
-kubectl logs -n iws-Euler deployment/iws-riskcontrol -f
+kubectl logs -n iws-Euler deployment/gateway -f
+kubectl logs -n iws-Euler deployment/matchingengine -f
+kubectl logs -n iws-Euler deployment/accountservice -f
+kubectl logs -n iws-Euler deployment/riskcontrol -f
 
 # 查看上一次崩溃的日志
-kubectl logs -n iws-Euler deployment/iws-gateway --previous
+kubectl logs -n iws-Euler deployment/gateway --previous
 ```
 
 ---
@@ -222,13 +222,13 @@ kubectl logs -n iws-Euler deployment/iws-gateway --previous
 kubectl get pods -n iws-Euler
 
 # 进入 Pod shell
-kubectl exec -it -n iws-Euler deployment/iws-gateway -- sh
+kubectl exec -it -n iws-Euler deployment/gateway -- sh
 
 # 查看服务（端口信息）
 kubectl get svc -n iws-Euler
 
 # 重启单个服务
-kubectl rollout restart deployment/iws-gateway -n iws-Euler
+kubectl rollout restart deployment/gateway -n iws-Euler
 
 # 查看 Helm release 状态
 helm status iws-Euler -n iws-Euler

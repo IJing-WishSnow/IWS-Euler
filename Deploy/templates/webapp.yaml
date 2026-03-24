@@ -1,20 +1,20 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: iws-webapp
+  name: webapp
   namespace: {{ .Values.namespace }}
 spec:
   replicas: {{ .Values.webapp.replicas }}
   selector:
     matchLabels:
-      app: iws-webapp
+      app: webapp
   template:
     metadata:
       labels:
-        app: iws-webapp
+        app: webapp
     spec:
       containers:
-        - name: iws-webapp
+        - name: webapp
           image: {{ .Values.webapp.image }}
           imagePullPolicy: Never
           ports:
@@ -29,12 +29,12 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: iws-webapp
+  name: webapp
   namespace: {{ .Values.namespace }}
 spec:
   type: NodePort
   selector:
-    app: iws-webapp
+    app: webapp
   ports:
     - port: {{ .Values.webapp.port }}
       targetPort: {{ .Values.webapp.port }}

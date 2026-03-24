@@ -1,20 +1,20 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: iws-gateway
+  name: gateway
   namespace: {{ .Values.namespace }}
 spec:
   replicas: {{ .Values.gateway.replicas }}
   selector:
     matchLabels:
-      app: iws-gateway
+      app: gateway
   template:
     metadata:
       labels:
-        app: iws-gateway
+        app: gateway
     spec:
       containers:
-        - name: iws-gateway
+        - name: gateway
           image: {{ .Values.gateway.image }}
           imagePullPolicy: Never
           ports:
@@ -23,7 +23,7 @@ spec:
             - name: REDIS_ADDR
               value: "redis:6379"
             - name: ORDER_SERVICE_URL
-              value: "http://iws-orderservice:8082"
+              value: "http://orderservice:8082"
             - name: GIN_MODE
               value: "release"
           readinessProbe:
@@ -35,11 +35,11 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: iws-gateway
+  name: gateway
   namespace: {{ .Values.namespace }}
 spec:
   selector:
-    app: iws-gateway
+    app: gateway
   ports:
     - port: {{ .Values.gateway.port }}
       targetPort: {{ .Values.gateway.port }}

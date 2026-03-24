@@ -40,7 +40,7 @@ Anvil/
 ## 手动交互（需端口转发）
 
 ```bash
-kubectl port-forward svc/iws-anvil 8545:8545 -n iws-Euler
+kubectl port-forward svc/anvil 8545:8545 -n iws-Euler
 
 # 查询合约 owner
 cast call 0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512 \
@@ -57,4 +57,4 @@ cast send 0x5FbDB2315678afecb367f032d93F642f64180aa3 \
 ## 端口
 
 - 容器端口：8545
-- K8s Service：ClusterIP（服务名 `iws-anvil`）
+- K8s Service：ClusterIP（服务名 `anvil`）

@@ -1,20 +1,20 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: iws-accountservice
+  name: accountservice
   namespace: {{ .Values.namespace }}
 spec:
   replicas: {{ .Values.accountservice.replicas }}
   selector:
     matchLabels:
-      app: iws-accountservice
+      app: accountservice
   template:
     metadata:
       labels:
-        app: iws-accountservice
+        app: accountservice
     spec:
       containers:
-        - name: iws-accountservice
+        - name: accountservice
           image: {{ .Values.accountservice.image }}
           imagePullPolicy: Never
           env:

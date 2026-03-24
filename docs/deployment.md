@@ -16,21 +16,21 @@
 ```bash
 # 在项目根目录 T:/IWS-Euler/ 下执行
 
-cd Anvil           && docker build -t iws-anvil:latest .           && cd ..
-cd Gateway         && docker build -t iws-gateway:latest .         && cd ..
-cd OrderService    && docker build -t iws-orderservice:latest .    && cd ..
-cd MatchingEngine  && docker build -t iws-matchingengine:latest .  && cd ..
-cd AccountService  && docker build -t iws-accountservice:latest .  && cd ..
-cd MarketData      && docker build -t iws-marketdata:latest .      && cd ..
-cd ChainClient     && docker build -t iws-chainclient:latest .     && cd ..
-cd RiskControl     && docker build -t iws-riskcontrol:latest .     && cd ..
-cd WebApp          && docker build -t iws-webapp:latest .          && cd ..
+cd Anvil           && docker build -t anvil:latest .           && cd ..
+cd Gateway         && docker build -t gateway:latest .         && cd ..
+cd OrderService    && docker build -t orderservice:latest .    && cd ..
+cd MatchingEngine  && docker build -t matchingengine:latest .  && cd ..
+cd AccountService  && docker build -t accountservice:latest .  && cd ..
+cd MarketData      && docker build -t marketdata:latest .      && cd ..
+cd ChainClient     && docker build -t chainclient:latest .     && cd ..
+cd RiskControl     && docker build -t riskcontrol:latest .     && cd ..
+cd WebApp          && docker build -t webapp:latest .          && cd ..
 ```
 
 验证镜像列表：
 
 ```bash
-docker images | grep iws-
+docker images | grep 
 ```
 
 ---
@@ -57,15 +57,15 @@ kubectl get pods -n iws-Euler -w
 
 ```
 NAME                                  READY   STATUS    RESTARTS
-iws-anvil-xxx                         1/1     Running   0
-iws-gateway-xxx                       1/1     Running   0
-iws-orderservice-xxx                  1/1     Running   0
-iws-matchingengine-xxx                1/1     Running   0
-iws-accountservice-xxx                1/1     Running   0
-iws-marketdata-xxx                    1/1     Running   0
-iws-chainclient-xxx                   1/1     Running   0
-iws-riskcontrol-xxx                   1/1     Running   0
-iws-webapp-xxx                        1/1     Running   0
+anvil-xxx                         1/1     Running   0
+gateway-xxx                       1/1     Running   0
+orderservice-xxx                  1/1     Running   0
+matchingengine-xxx                1/1     Running   0
+accountservice-xxx                1/1     Running   0
+marketdata-xxx                    1/1     Running   0
+chainclient-xxx                   1/1     Running   0
+riskcontrol-xxx                   1/1     Running   0
+webapp-xxx                        1/1     Running   0
 kafka-xxx                             1/1     Running   0
 redis-xxx                             1/1     Running   0
 ```
@@ -84,10 +84,10 @@ http://localhost:30080
 
 ```bash
 # Gateway API
-kubectl port-forward svc/iws-gateway 18083:8081 -n iws-Euler
+kubectl port-forward svc/gateway 18083:8081 -n iws-Euler
 
 # MarketData WebSocket
-kubectl port-forward svc/iws-marketdata 18084:8080 -n iws-Euler
+kubectl port-forward svc/marketdata 18084:8080 -n iws-Euler
 
 # Redis（测试限流）
 kubectl port-forward svc/redis 6379:6379 -n iws-Euler
@@ -96,7 +96,7 @@ kubectl port-forward svc/redis 6379:6379 -n iws-Euler
 kubectl port-forward svc/kafka 9094:9092 -n iws-Euler
 
 # Anvil 本地链
-kubectl port-forward svc/iws-anvil 8545:8545 -n iws-Euler
+kubectl port-forward svc/anvil 8545:8545 -n iws-Euler
 ```
 
 ---
@@ -107,9 +107,9 @@ kubectl port-forward svc/iws-anvil 8545:8545 -n iws-Euler
 
 ```bash
 # 以 Gateway 为例
-cd Gateway && docker build -t iws-gateway:latest . && cd ..
-kubectl rollout restart deployment/iws-gateway -n iws-Euler
-kubectl rollout status deployment/iws-gateway -n iws-Euler
+cd Gateway && docker build -t gateway:latest . && cd ..
+kubectl rollout restart deployment/gateway -n iws-Euler
+kubectl rollout status deployment/gateway -n iws-Euler
 ```
 
 ---
@@ -167,7 +167,7 @@ cast call 0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512 \
 
 ```bash
 # 查看日志
-kubectl logs -n iws-Euler deployment/iws-gateway --previous
+kubectl logs -n iws-Euler deployment/gateway --previous
 
 # 常见原因：
 # 1. Kafka 未就绪 → 等待 kafka pod Running 后其他服务会自动重试
@@ -179,7 +179,7 @@ kubectl logs -n iws-Euler deployment/iws-gateway --previous
 所有镜像使用 `imagePullPolicy: Never`，必须在本地 Docker 中存在：
 
 ```bash
-docker images | grep iws-
+docker images | grep 
 # 如果缺少某个，重新执行对应 docker build 命令
 ```
 

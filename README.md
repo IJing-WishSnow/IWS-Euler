@@ -61,15 +61,15 @@ Anvil (本地链)
 
 ```bash
 # 1. 构建所有镜像
-cd Anvil && docker build -t iws-anvil:latest .
-cd Gateway && docker build -t iws-gateway:latest .
-cd OrderService && docker build -t iws-orderservice:latest .
-cd MatchingEngine && docker build -t iws-matchingengine:latest .
-cd AccountService && docker build -t iws-accountservice:latest .
-cd MarketData && docker build -t iws-marketdata:latest .
-cd ChainClient && docker build -t iws-chainclient:latest .
-cd RiskControl && docker build -t iws-riskcontrol:latest .
-cd WebApp && docker build -t iws-webapp:latest .
+cd Anvil && docker build -t anvil:latest .
+cd Gateway && docker build -t gateway:latest .
+cd OrderService && docker build -t orderservice:latest .
+cd MatchingEngine && docker build -t matchingengine:latest .
+cd AccountService && docker build -t accountservice:latest .
+cd MarketData && docker build -t marketdata:latest .
+cd ChainClient && docker build -t chainclient:latest .
+cd RiskControl && docker build -t riskcontrol:latest .
+cd WebApp && docker build -t webapp:latest .
 
 # 2. Helm 部署到 K8s
 cd Deploy
@@ -87,8 +87,8 @@ docker run --rm -v "$(pwd)/MatchingEngine:/workspace" wishsnow/golang-dev:latest
   sh -c "cd /workspace && go test ./... -v"
 
 # 系统 E2E 测试
-kubectl port-forward svc/iws-gateway 18083:8081 -n iws-Euler
-kubectl port-forward svc/iws-marketdata 18084:8080 -n iws-Euler
+kubectl port-forward svc/gateway 18083:8081 -n iws-Euler
+kubectl port-forward svc/marketdata 18084:8080 -n iws-Euler
 python tests/e2e_system_test.py -v
 ```
 

@@ -51,7 +51,7 @@
 | 命名空间            | iws-Euler                                                |
 | Pod 访问方式        | kubectl port-forward                                     |
 | Go 测试执行环境     | wishsnow/golang-dev:latest (Docker)                      |
-| Python 测试执行环境 | iws-riskcontrol pod (Python 3.11) / 宿主机 Python 3.10.6 |
+| Python 测试执行环境 | riskcontrol pod (Python 3.11) / 宿主机 Python 3.10.6 |
 
 ---
 
@@ -97,8 +97,8 @@ docker run --rm -v "T:/IWS-Euler/Gateway:/workspace" --network host \
   sh -c "cd /workspace && go test ./middleware/... -v -run TestRateLimiterIntegration -count=1"
 
 # 系统 E2E 测试（需 port-forward gateway + marketdata）
-kubectl port-forward svc/iws-gateway 18083:8081 -n iws-Euler
-kubectl port-forward svc/iws-marketdata 18084:8080 -n iws-Euler
+kubectl port-forward svc/gateway 18083:8081 -n iws-Euler
+kubectl port-forward svc/marketdata 18084:8080 -n iws-Euler
 PYTHONIOENCODING=utf-8 python T:/IWS-Euler/tests/e2e_system_test.py -v
 
 # 性能基准测试

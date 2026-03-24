@@ -99,7 +99,7 @@ ok  github.com/yourname/AccountService/service  0.004s
 
 ### 5. RiskControl — 风控规则引擎
 
-**执行环境**: iws-riskcontrol Pod (Python 3.11)
+**执行环境**: riskcontrol Pod (Python 3.11)
 
 ```
 test_high_frequency_triggers_alert ... ok   [高频报警触发 (1 条，阈值=20)]
@@ -142,7 +142,7 @@ Ran 10 tests in 1.103s — OK
 
 ### 7. Gateway API 接口测试
 
-**执行环境**: curl → kubectl port-forward iws-gateway:8081 → localhost:18081
+**执行环境**: curl → kubectl port-forward gateway:8081 → localhost:18081
 
 | 接口            | 用例       | 结果                |
 | --------------- | ---------- | ------------------- |

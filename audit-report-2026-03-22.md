@@ -18,7 +18,7 @@
 
 **文件：** `RiskControl/consumer.py:29`
 **问题：** `_consume_orders` 和 `_consume_trades` 是 daemon 线程，启动时若 Kafka 未就绪，`KafkaConsumer()` 构造函数抛 `NoBrokersAvailable`，线程直接死亡且无 try/except 重试。主进程 `while True: time.sleep(1)` 仍在运行，K8s 认为 Pod 健康，但消费线程已永久死亡。**风控实际上什么都没有在消费。**
-**验证：** `kubectl logs deployment/iws-riskcontrol` 最新日志停在 108 分钟前的异常栈。
+**验证：** `kubectl logs deployment/riskcontrol` 最新日志停在 108 分钟前的异常栈。
 **修复：** 在线程内部加 `try/except + 重试循环`。
 
 ---
@@ -65,7 +65,7 @@
 ### 8. operatorPrivKey 明文暴露
 
 **文件：** `Deploy/values.yaml:13`，注入到 Pod env var
-**问题：** `kubectl describe pod iws-chainclient-xxx` 可直接看到私钥明文。
+**问题：** `kubectl describe pod chainclient-xxx` 可直接看到私钥明文。
 **修复：** 改用 K8s Secret。（Demo 项目可接受现状，记录风险即可）
 
 ---

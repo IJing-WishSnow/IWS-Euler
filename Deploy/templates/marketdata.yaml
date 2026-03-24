@@ -1,20 +1,20 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: iws-marketdata
+  name: marketdata
   namespace: {{ .Values.namespace }}
 spec:
   replicas: {{ .Values.marketdata.replicas }}
   selector:
     matchLabels:
-      app: iws-marketdata
+      app: marketdata
   template:
     metadata:
       labels:
-        app: iws-marketdata
+        app: marketdata
     spec:
       containers:
-        - name: iws-marketdata
+        - name: marketdata
           image: {{ .Values.marketdata.image }}
           imagePullPolicy: Never
           ports:
@@ -31,11 +31,11 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: iws-marketdata
+  name: marketdata
   namespace: {{ .Values.namespace }}
 spec:
   selector:
-    app: iws-marketdata
+    app: marketdata
   ports:
     - port: {{ .Values.marketdata.port }}
       targetPort: {{ .Values.marketdata.port }}

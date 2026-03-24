@@ -177,3 +177,6 @@ body {
 /* 退出按钮 */
 .logout-btn { margin-left: auto; padding: 4px 12px; background: transparent; border: 1px solid #2b2f36; color: #848e9c; border-radius: 4px; cursor: pointer; font-size: 12px; }
 .logout-btn:hover { border-color: #f6465d; color: #f6465d; }
+
+/* 表单错误提示 */
+.form-error { color: #f6465d; font-size: 12px; margin-top: 8px; }

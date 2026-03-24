@@ -60,23 +60,23 @@ function LoginForm({ onLogin }: { onLogin: (token: string) => void }) {
           <button type="submit" className="btn-buy">登录</button>
           <button type="button" className="btn-sell" onClick={handleRegister}>注册</button>
         </form>
-        {error && <p style={{ color: '#f6465d', fontSize: 12, marginTop: 8 }}>{error}</p>}
+        {error && <p className="form-error">{error}</p>}
       </div>
     </div>
   )
 }
 
 export default function App() {
-  const [token, setToken] = useState<string>(localStorage.getItem('iws_token') || '')
+  const [token, setToken] = useState<string>(localStorage.getItem('token') || '')
   const [trades, setTrades] = useState<Trade[]>([])
 
   const handleLogin = (t: string) => {
-    localStorage.setItem('iws_token', t)
+    localStorage.setItem('token', t)
     setToken(t)
   }
 
   const handleLogout = () => {
-    localStorage.removeItem('iws_token')
+    localStorage.removeItem('token')
     setToken('')
   }
 

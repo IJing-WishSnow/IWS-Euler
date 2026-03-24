@@ -1,20 +1,20 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: iws-riskcontrol
+  name: riskcontrol
   namespace: {{ .Values.namespace }}
 spec:
   replicas: {{ .Values.riskcontrol.replicas }}
   selector:
     matchLabels:
-      app: iws-riskcontrol
+      app: riskcontrol
   template:
     metadata:
       labels:
-        app: iws-riskcontrol
+        app: riskcontrol
     spec:
       containers:
-        - name: iws-riskcontrol
+        - name: riskcontrol
           image: {{ .Values.riskcontrol.image }}
           imagePullPolicy: Never
           env:

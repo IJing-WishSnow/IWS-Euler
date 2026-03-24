@@ -59,7 +59,7 @@ RiskControl/
 
 ```bash
 # 在 Pod 内运行（推荐）
-POD=$(kubectl get pod -n iws-Euler -l app=iws-riskcontrol -o jsonpath='{.items[0].metadata.name}')
+POD=$(kubectl get pod -n iws-Euler -l app=riskcontrol -o jsonpath='{.items[0].metadata.name}')
 kubectl exec -n iws-Euler $POD -- python -m unittest tests.test_rule_engine -v
 
 # 本地运行

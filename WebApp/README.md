@@ -20,10 +20,10 @@
 
 | 请求路径 | 转发目标 |
 |----------|----------|
-| `/login` | `http://iws-gateway:8081/login` |
-| `/register` | `http://iws-gateway:8081/register` |
-| `/api/*` | `http://iws-gateway:8081/api/*` |
-| `/ws` | `ws://iws-marketdata:8080/ws` |
+| `/login` | `http://gateway:8081/login` |
+| `/register` | `http://gateway:8081/register` |
+| `/api/*` | `http://gateway:8081/api/*` |
+| `/ws` | `ws://marketdata:8080/ws` |
 | `/*` | React SPA（index.html） |
 
 ## 开发
@@ -39,7 +39,7 @@ npm run lint   # ESLint 检查
 ## Docker 构建
 
 ```bash
-docker build -t iws-webapp:latest .
+docker build -t webapp:latest .
 ```
 
 Dockerfile 使用多阶段构建：

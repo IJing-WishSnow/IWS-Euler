@@ -1,20 +1,20 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: iws-matchingengine
+  name: matchingengine
   namespace: {{ .Values.namespace }}
 spec:
   replicas: {{ .Values.matchingengine.replicas }}
   selector:
     matchLabels:
-      app: iws-matchingengine
+      app: matchingengine
   template:
     metadata:
       labels:
-        app: iws-matchingengine
+        app: matchingengine
     spec:
       containers:
-        - name: iws-matchingengine
+        - name: matchingengine
           image: {{ .Values.matchingengine.image }}
           imagePullPolicy: Never
           env:

@@ -1,11 +1,11 @@
 services:
   postgres:
     image: postgres:16-alpine
-    container_name: iws-postgres
+    container_name: postgres
     environment:
-      POSTGRES_USER: iws
-      POSTGRES_PASSWORD: iws123
-      POSTGRES_DB: iws_account
+      POSTGRES_USER: postgre
+      POSTGRES_PASSWORD: postgre123
+      POSTGRES_DB: account
     ports:
       - "5432:5432"
     volumes:
@@ -13,13 +13,13 @@ services:
 
   redis:
     image: redis:7-alpine
-    container_name: iws-redis
+    container_name: redis
     ports:
       - "6379:6379"
 
   kafka:
     image: apache/kafka:3.8.1
-    container_name: iws-kafka
+    container_name: kafka
     environment:
       KAFKA_NODE_ID: 0
       KAFKA_PROCESS_ROLES: controller,broker

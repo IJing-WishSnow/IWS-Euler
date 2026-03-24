@@ -1,20 +1,20 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: iws-chainclient
+  name: chainclient
   namespace: {{ .Values.namespace }}
 spec:
   replicas: {{ .Values.chainclient.replicas }}
   selector:
     matchLabels:
-      app: iws-chainclient
+      app: chainclient
   template:
     metadata:
       labels:
-        app: iws-chainclient
+        app: chainclient
     spec:
       containers:
-        - name: iws-chainclient
+        - name: chainclient
           image: {{ .Values.chainclient.image }}
           imagePullPolicy: Never
           env:

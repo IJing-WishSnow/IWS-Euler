@@ -109,7 +109,7 @@ livenessProbe:
 
 ```nginx
 location ~ ^/(login|register|api/) {
-    proxy_pass http://iws-gateway:8081;
+    proxy_pass http://gateway:8081;
     ...
 }
 ```
@@ -226,13 +226,13 @@ func formatInt(n int64) string {
 | anvil              | Running | 自动部署合约，重启安全      |
 | kafka              | Running | KRaft 单节点                |
 | redis              | Running | -                           |
-| iws-gateway        | Running | HTTP→OrderService，JWT 鉴权 |
-| iws-orderservice   | Running | 新增微服务，写 Kafka        |
-| iws-matchingengine | Running | 撮合引擎，部分成交安全      |
-| iws-accountservice | Running | 内存版账户，livenessProbe   |
-| iws-chainclient    | Running | 链上结算，livenessProbe     |
-| iws-marketdata     | Running | hub 数据竞争已修复          |
-| iws-riskcontrol    | Running | 线程自愈，PYTHONUNBUFFERED  |
-| iws-webapp         | Running | Nginx 静态 + 反代           |
+| gateway        | Running | HTTP→OrderService，JWT 鉴权 |
+| orderservice   | Running | 新增微服务，写 Kafka        |
+| matchingengine | Running | 撮合引擎，部分成交安全      |
+| accountservice | Running | 内存版账户，livenessProbe   |
+| chainclient    | Running | 链上结算，livenessProbe     |
+| marketdata     | Running | hub 数据竞争已修复          |
+| riskcontrol    | Running | 线程自愈，PYTHONUNBUFFERED  |
+| webapp         | Running | Nginx 静态 + 反代           |
 
 所有服务均无 CrashLoop，无待处理的 P0/P1 问题。
