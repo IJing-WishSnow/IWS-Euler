@@ -31,7 +31,7 @@ Kafka [orders topic]
   └──► RiskControl (同时监听 orders + trades)
 
 Anvil (本地链)
-  └── IWSSettlement 合约 (批量结算)
+  └── Settlement 合约 (批量结算)
   └── MockERC20 合约 (测试 Token)
 ```
 

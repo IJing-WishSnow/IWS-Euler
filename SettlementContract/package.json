@@ -1,7 +1,7 @@
 {
   "name": "settlement-contract",
   "version": "1.0.0",
-  "description": "IWS Exchange on-chain settlement contract",
+  "description": "on-chain settlement contract",
   "scripts": {
     "compile": "npx hardhat compile",
     "test": "npx hardhat test",

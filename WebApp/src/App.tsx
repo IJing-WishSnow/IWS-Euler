@@ -51,7 +51,7 @@ function LoginForm({ onLogin }: { onLogin: (token: string) => void }) {
   return (
     <div className="login-container">
       <div className="login-box">
-        <h2 className="logo">IWS Exchange</h2>
+        <h2 className="logo">Euler Exchange</h2>
         <form onSubmit={handleLogin} className="order-form">
           <label>用户名</label>
           <input value={username} onChange={e => setUsername(e.target.value)} placeholder="输入用户名" />
@@ -85,7 +85,7 @@ export default function App() {
   return (
     <div className="app">
       <header className="header">
-        <span className="logo">IWS</span>
+        <span className="logo">Euler</span>
         <span className="symbol">{SYMBOL}</span>
         <button type="button" onClick={handleLogout} className="logout-btn">退出</button>
       </header>

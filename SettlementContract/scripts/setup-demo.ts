@@ -4,7 +4,7 @@
  * Bob   = Anvil account 3: 0x90F79bf6EB2c4f870365E785982E1f101E93b906
  */
 import { ethers } from "hardhat";
-import { MockERC20, IWSSettlement } from "../typechain-types";
+import { MockERC20, Settlement } from "../typechain-types";
 
 const USDT_ADDRESS     = "0x5FbDB2315678afecb367f032d93F642f64180aa3";
 const SETTLEMENT_ADDRESS = "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512";
@@ -20,7 +20,7 @@ async function main() {
   console.log("Bob 地址:  ", bob.address);
 
   const usdt = await ethers.getContractAt("MockERC20", USDT_ADDRESS) as unknown as MockERC20;
-  const settlement = await ethers.getContractAt("IWSSettlement", SETTLEMENT_ADDRESS) as unknown as IWSSettlement;
+  const settlement = await ethers.getContractAt("Settlement", SETTLEMENT_ADDRESS) as unknown as Settlement;
 
   // 1. Mint USDT 给 alice 和 bob
   await usdt.mint(alice.address, DEPOSIT_AMOUNT);

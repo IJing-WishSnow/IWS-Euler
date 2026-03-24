@@ -132,7 +132,7 @@ kubectl delete namespace iws-Euler
 | `namespace`             | K8s 命名空间，默认 `iws-Euler`       |
 | `kafka.image`           | Kafka 镜像                           |
 | `redis.image`           | Redis 镜像                           |
-| `anvil.contractAddress` | IWSSettlement 合约地址（确定性）     |
+| `anvil.contractAddress` | Settlement 合约地址（确定性）     |
 | `anvil.operatorPrivKey` | 后端调用合约的私钥（Anvil 测试账户） |
 | `gateway.port`          | Gateway 监听端口（8081）             |
 | `orderservice.port`     | OrderService 监听端口（8082）        |
@@ -149,7 +149,7 @@ Anvil 镜像启动时自动部署合约，无需手动操作。
 | 合约          | 地址                                         |
 | ------------- | -------------------------------------------- |
 | MockERC20     | `0x5FbDB2315678afecb367f032d93F642f64180aa3` |
-| IWSSettlement | `0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512` |
+| Settlement | `0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512` |
 
 手动验证合约部署（需端口转发 Anvil）：
 

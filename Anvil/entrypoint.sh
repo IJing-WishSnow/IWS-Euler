@@ -22,11 +22,11 @@ MOCK_INIT="0x$(cat /contracts/mock.bin)${MOCK_ARGS}"
 cast send --private-key $DEPLOYER_KEY --rpc-url $RPC --create $MOCK_INIT > /dev/null
 echo "[init] MockERC20 deployed: 0x5FbDB2315678afecb367f032d93F642f64180aa3"
 
-# Deploy IWSSettlement (nonce 1 → 0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512)
+# Deploy Settlement (nonce 1 → 0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512)
 SETTLEMENT_ARGS=$(cast abi-encode "constructor(address)" $OPERATOR | sed 's/0x//')
 SETTLEMENT_INIT="0x$(cat /contracts/settlement.bin)${SETTLEMENT_ARGS}"
 cast send --private-key $DEPLOYER_KEY --rpc-url $RPC --create $SETTLEMENT_INIT > /dev/null
-echo "[init] IWSSettlement deployed: 0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512"
+echo "[init] Settlement deployed: 0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512"
 
 echo "[init] Contract deployment complete. Anvil running."
 

@@ -41,7 +41,7 @@ helm uninstall iws-Euler -n iws-Euler
 | 字段                    | 说明                                |
 | ----------------------- | ----------------------------------- |
 | `namespace`             | K8s 命名空间（`iws-Euler`）         |
-| `anvil.contractAddress` | IWSSettlement 合约地址              |
+| `anvil.contractAddress` | Settlement 合约地址              |
 | `anvil.operatorPrivKey` | Operator 私钥（Anvil 第二测试账户） |
 | `gateway.port`          | 8081                                |
 | `orderservice.port`     | 8082                                |

@@ -1,13 +1,13 @@
 # Anvil
 
-本地以太坊节点，基于 Foundry Anvil，启动时自动部署 MockERC20 和 IWSSettlement 合约。
+本地以太坊节点，基于 Foundry Anvil，启动时自动部署 MockERC20 和 Settlement 合约。
 
 ## 职责
 
 - 运行本地以太坊节点（链 ID 31337）
 - 启动脚本自动部署两个合约：
   1. `MockERC20`：无权限 mint 的测试用 ERC20
-  2. `IWSSettlement`：资产托管和批量结算合约
+  2. `Settlement`：资产托管和批量结算合约
 
 ## 合约地址（确定性）
 
@@ -16,7 +16,7 @@
 | 合约          | 地址                                         |
 | ------------- | -------------------------------------------- |
 | MockERC20     | `0x5FbDB2315678afecb367f032d93F642f64180aa3` |
-| IWSSettlement | `0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512` |
+| Settlement | `0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512` |
 
 > 这些地址已硬编码在 `Deploy/values.yaml` 的 `anvil.contractAddress` 中。
 

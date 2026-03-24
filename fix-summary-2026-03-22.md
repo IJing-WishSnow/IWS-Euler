@@ -58,11 +58,11 @@
 
 **目录**: 新建 `Anvil/`
 
-**问题**: Helm 部署使用 `ghcr.io/foundry-rs/foundry:latest` 镜像并传入 `command: ["anvil", "--host", "0.0.0.0"]`，Pod 重启后链上状态清空，IWSSettlement 合约消失，ChainClient 所有交易均失败。
+**问题**: Helm 部署使用 `ghcr.io/foundry-rs/foundry:latest` 镜像并传入 `command: ["anvil", "--host", "0.0.0.0"]`，Pod 重启后链上状态清空，Settlement 合约消失，ChainClient 所有交易均失败。
 
 **修复**: 新建自定义 `Anvil` Docker 镜像：
 
-- `entrypoint.sh` 启动 Anvil → 等待就绪 → 确定性部署 MockERC20（nonce=0）和 IWSSettlement（nonce=1）
+- `entrypoint.sh` 启动 Anvil → 等待就绪 → 确定性部署 MockERC20（nonce=0）和 Settlement（nonce=1）
 - 合约地址与 `values.yaml` 中配置完全一致，重启后自动恢复
 - 注意：`ENTRYPOINT ["sh", "/entrypoint.sh"]` 而非 `RUN chmod +x`（foundry 镜像为非 root 用户）
 
@@ -211,7 +211,7 @@ func formatInt(n int64) string {
 - **Kafka 消息格式兼容性**: OrderService 发送的 `OrderRequest`（Side/Type 序列化为 `"buy"/"sell"/"limit"/"market"` 字符串）与 MatchingEngine 的 `OrderMessage`（Side/Type 为 `string`）完全匹配；trades 消息格式在 AccountService、ChainClient、MarketData、RiskControl 间完全一致
 - **GroupID 唯一性**: 6 个消费者组（`matching-engine`、`account-settler`、`chain-client`、`market-data`、`risk-control-orders`、`risk-control-trades`）全部不重复
 - **Kafka 地址一致性**: 所有服务 K8s env 均为 `kafka:9092`，本地 fallback 均为 `localhost:9094`，Kafka 广播地址为 `PLAINTEXT://kafka:9092`
-- **合约地址一致性**: MockERC20 `0x5FbDB...` 在 entrypoint.sh 和 ChainClient 中一致；IWSSettlement `0xe7f172...` 在 entrypoint.sh、chainclient.yaml、values.yaml 中一致
+- **合约地址一致性**: MockERC20 `0x5FbDB...` 在 entrypoint.sh 和 ChainClient 中一致；Settlement `0xe7f172...` 在 entrypoint.sh、chainclient.yaml、values.yaml 中一致
 - **nginx 路由覆盖**: `^/(login|register|api/)` 覆盖所有 Gateway 路由；`/ws` 正确代理到 MarketData:8080
 - **Aggregator 锁顺序**: `Feed` 持 `Aggregator.mu.Lock` → `archive` 调 `hub.BroadcastKLine` → `broadcast` 持 `Hub.mu.RLock`，两个不同的锁，不存在死锁
 - **引擎并发安全**: Engine 单线程串行调用（Bridge 单 goroutine），无并发访问问题

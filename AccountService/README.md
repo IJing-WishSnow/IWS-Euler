@@ -54,7 +54,7 @@ docker run --rm -v "T:/IWS-Euler/AccountService:/workspace" \
 ## 注意事项
 
 - 当前余额存储在内存中，服务重启后数据丢失（适合 demo 场景）
-- 链下余额与链上 IWSSettlement 合约余额相互独立
+- 链下余额与链上 Settlement 合约余额相互独立
 - `sync.RWMutex`：读操作使用 `RLock`，写操作使用 `Lock`，不可在 `RLock` 内修改 map
 
 ## 无对外 HTTP 端口

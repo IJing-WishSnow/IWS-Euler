@@ -4,7 +4,7 @@
 
 ## 合约
 
-### IWSSettlement.sol
+### Settlement.sol
 
 核心结算合约。
 
@@ -105,10 +105,10 @@ npx hardhat run scripts/deploy.ts --network localhost
 ```
 SettlementContract/
 ├── contracts/
-│   ├── IWSSettlement.sol    # 核心合约
+│   ├── Settlement.sol    # 核心合约
 │   └── MockERC20.sol        # 测试 ERC20
 ├── test/
-│   └── IWSSettlement.test.ts # 完整测试
+│   └── Settlement.test.ts # 完整测试
 ├── scripts/
 │   └── deploy.ts            # 部署脚本
 ├── hardhat.config.ts

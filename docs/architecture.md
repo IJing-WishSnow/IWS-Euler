@@ -35,7 +35,7 @@ Kafka [orders topic]
   └──► RiskControl (同时监听 orders + trades)
 
 Anvil (本地链)
-  └── IWSSettlement 合约 (批量资产结算)
+  └── Settlement 合约 (批量资产结算)
   └── MockERC20 合约 (测试 Token)
 ```
 
@@ -91,7 +91,7 @@ Anvil (本地链)
 ### ChainClient（链上结算客户端）
 
 - 消费 Kafka `trades` topic
-- 聚合成交记录，批量调用 IWSSettlement 合约的 `settle()` 函数
+- 聚合成交记录，批量调用 Settlement 合约的 `settle()` 函数
 - 使用 Anvil 本地链（RPC: `http://anvil:8545`）
 - 消费组：`chainclient-group`
 
@@ -108,15 +108,15 @@ Anvil (本地链)
 ### Anvil（本地区块链）
 
 - 基于 Foundry Anvil，启动本地以太坊节点
-- 启动时自动部署 MockERC20 和 IWSSettlement 合约
+- 启动时自动部署 MockERC20 和 Settlement 合约
 - RPC 端口 8545，链 ID 31337
 - 合约地址（确定性）：
   - MockERC20: `0x5FbDB2315678afecb367f032d93F642f64180aa3`
-  - IWSSettlement: `0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512`
+  - Settlement: `0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512`
 
 ### SettlementContract（链上结算合约）
 
-- `IWSSettlement.sol`：核心合约
+- `Settlement.sol`：核心合约
   - `deposit(token, amount)` — 用户充值 ERC20
   - `withdraw(token, amount)` — 用户提现
   - `settle(Settlement[])` — operator 批量结算（转移链上余额）

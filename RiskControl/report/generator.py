@@ -55,7 +55,7 @@ class ReportGenerator:
 
         lines = [
             "=" * 50,
-            "IWS 交易风控日报",
+            "交易风控日报",
             "=" * 50,
             f"\n风险等级: {level}",
             f"告警总数: {total}",

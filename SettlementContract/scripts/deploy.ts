@@ -13,11 +13,11 @@ async function main() {
   await usdt.waitForDeployment();
   console.log("MockUSDT 地址:", await usdt.getAddress());
 
-  // 2. 部署 IWSSettlement
-  const IWSSettlement = await ethers.getContractFactory("IWSSettlement");
-  const settlement = await IWSSettlement.deploy(operator.address);
+  // 2. 部署 Settlement
+  const SettlementFactory = await ethers.getContractFactory("Settlement");
+  const settlement = await SettlementFactory.deploy(operator.address);
   await settlement.waitForDeployment();
-  console.log("IWSSettlement 地址:", await settlement.getAddress());
+  console.log("Settlement 地址:", await settlement.getAddress());
 
   // 3. 给 deployer mint 一些测试 USDT
   const ONE = 10n ** 6n;

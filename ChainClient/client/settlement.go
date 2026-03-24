@@ -24,8 +24,8 @@ type Settlement struct {
 	Amount *big.Int
 }
 
-// IWSSettlementABI 合约 ABI（只包含需要调用的函数）
-const IWSSettlementABI = `[
+// SettlementABI 合约 ABI（只包含需要调用的函数）
+const SettlementABI = `[
   {
     "name": "settle",
     "type": "function",
@@ -62,7 +62,7 @@ const IWSSettlementABI = `[
   }
 ]`
 
-// SettlementClient 封装对 IWSSettlement 合约的调用
+// SettlementClient 封装对 Settlement 合约的调用
 type SettlementClient struct {
 	ethClient       *ethclient.Client
 	contractAddress common.Address
@@ -74,7 +74,7 @@ type SettlementClient struct {
 
 // NewSettlementClient 创建客户端
 // rpcURL: Anvil 地址，例如 "http://127.0.0.1:8545"
-// contractAddr: IWSSettlement 合约地址
+// contractAddr: Settlement 合约地址
 // operatorPrivKey: operator 私钥（十六进制，不带 0x 前缀）
 func NewSettlementClient(rpcURL, contractAddr, operatorPrivKey string) (*SettlementClient, error) {
 	ec, err := ethclient.Dial(rpcURL)
@@ -87,7 +87,7 @@ func NewSettlementClient(rpcURL, contractAddr, operatorPrivKey string) (*Settlem
 		return nil, fmt.Errorf("获取 chainID 失败: %w", err)
 	}
 
-	parsed, err := abi.JSON(strings.NewReader(IWSSettlementABI))
+	parsed, err := abi.JSON(strings.NewReader(SettlementABI))
 	if err != nil {
 		return nil, fmt.Errorf("解析 ABI 失败: %w", err)
 	}

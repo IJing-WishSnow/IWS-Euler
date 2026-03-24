@@ -1,10 +1,10 @@
 import { expect } from "chai";
 import { ethers } from "hardhat";
-import { IWSSettlement, MockERC20 } from "../typechain-types";
+import { Settlement, MockERC20 } from "../typechain-types";
 import { HardhatEthersSigner } from "@nomicfoundation/hardhat-ethers/signers";
 
-describe("IWSSettlement", function () {
-  let settlement: IWSSettlement;
+describe("Settlement", function () {
+  let settlement: Settlement;
   let usdt: MockERC20;
   let owner: HardhatEthersSigner;
   let operator: HardhatEthersSigner;
@@ -22,9 +22,9 @@ describe("IWSSettlement", function () {
     const MockERC20Factory = await ethers.getContractFactory("MockERC20");
     usdt = await MockERC20Factory.deploy("Mock USDT", "USDT", 6) as unknown as MockERC20;
 
-    // 部署 IWSSettlement
-    const SettlementFactory = await ethers.getContractFactory("IWSSettlement");
-    settlement = await SettlementFactory.deploy(operator.address) as unknown as IWSSettlement;
+    // 部署 Settlement
+    const SettlementFactory = await ethers.getContractFactory("Settlement");
+    settlement = await SettlementFactory.deploy(operator.address) as unknown as Settlement;
 
     // 给 alice 和 bob 各 mint 10000 USDT
     await usdt.mint(alice.address, 10000n * ONE);

@@ -5,11 +5,11 @@ import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 import "@openzeppelin/contracts/utils/ReentrancyGuard.sol";
 
-/// @title IWSSettlement
+/// @title Settlement
 /// @notice 链上资产托管与批量结算合约。
 ///         架构：链下撮合（Go 引擎）+ 链上结算（此合约），对标 dYdX v3。
 ///         用户充值 ERC20 → 合约托管 → 后端提交批量结算 → 用户提现。
-contract IWSSettlement is ReentrancyGuard {
+contract Settlement is ReentrancyGuard {
     using SafeERC20 for IERC20;
 
     /// @notice 合约部署者，可以更换 operator
@@ -22,7 +22,7 @@ contract IWSSettlement is ReentrancyGuard {
     mapping(address => mapping(address => uint256)) public balances;
 
     /// @notice 批量结算的单笔结构
-    struct Settlement {
+    struct SettlementEntry {
         address from;
         address to;
         address token;
@@ -92,9 +92,9 @@ contract IWSSettlement is ReentrancyGuard {
     /// @notice 提交批量结算（仅 operator 可调用）
     /// @dev 撮合引擎产生成交后，后端调用此函数更新链上余额
     /// @param settlements 结算列表
-    function settle(Settlement[] calldata settlements) external onlyOperator {
+    function settle(SettlementEntry[] calldata settlements) external onlyOperator {
         for (uint256 i = 0; i < settlements.length; i++) {
-            Settlement calldata s = settlements[i];
+            SettlementEntry calldata s = settlements[i];
             if (s.amount == 0) revert ZeroAmount();
             uint256 available = balances[s.from][s.token];
             if (available < s.amount) {
