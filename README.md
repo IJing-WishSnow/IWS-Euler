@@ -108,5 +108,5 @@ python tests/e2e_system_test.py -v
 | 系统架构 | [docs/architecture.md](./docs/architecture.md)    |
 | 部署指南 | [docs/deployment.md](./docs/deployment.md)        |
 | 开发指南 | [docs/development.md](./docs/development.md)      |
-| 审计报告 | W:/CC生成文档/IWS-Euler/fix-summary-2026-03-22.md |
-| 测试报告 | W:/CC生成文档/IWS-Euler/testing/test-report.md    |
+| 审计报告 | fix-summary-2026-03-22.md |
+| 测试报告 | testing/test-report.md    |
